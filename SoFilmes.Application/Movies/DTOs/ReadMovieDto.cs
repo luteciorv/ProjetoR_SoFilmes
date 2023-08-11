@@ -7,8 +7,9 @@ namespace SoFilmes.Application.Movies.DTOs
         string Title, 
         string Summary, 
         int DurationInMinutes, 
-        EAgeClassification AgeClassification, 
-        DateTime CreatedAt, 
-        DateTime UpdatedAt
+        decimal Rating,
+        string AgeClassification, 
+        string CreatedAt, 
+        string UpdatedAt
     );
 }

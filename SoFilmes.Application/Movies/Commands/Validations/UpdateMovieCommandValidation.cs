@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using SoFilmes.Application.Interfaces.Repositories;
 using SoFilmes.Domain.Enums;
 
 namespace SoFilmes.Application.Movies.Commands.Validations
 {
-    public class CreateMovieCommandValidation : AbstractValidator<CreateMovieCommand>
+    public class UpdateMovieCommandValidation : AbstractValidator<UpdateMovieCommand>
     {
-        public CreateMovieCommandValidation()
+        public UpdateMovieCommandValidation()
         {
             RuleFor(m => m.Title)
                 .NotEmpty()
@@ -14,7 +13,7 @@ namespace SoFilmes.Application.Movies.Commands.Validations
             RuleFor(m => m.Title.Length)
                 .LessThanOrEqualTo(100)
                 .WithMessage(m => $"O campo '{nameof(m.Title)}' do filme não pode ultrapassar 100 caracteres.");
-
+           
             RuleFor(m => m.Summary)
                 .NotEmpty()
                 .WithMessage(m => $"O campo '{nameof(m.Summary)}' do filme é obrigatório");

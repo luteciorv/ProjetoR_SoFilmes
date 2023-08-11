@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SoFilmes.Application.Movies.Commands;
 using SoFilmes.Application.Movies.DTOs;
 using SoFilmes.Application.Movies.Map;
 using SoFilmes.Application.Movies.Queries;
@@ -78,7 +79,7 @@ namespace SoFilmes.WebApi.Controllers
         }
 
         /// <summary>
-        /// Cria o filma
+        /// Cria o filme
         /// </summary>
         /// <param name="dto">Dados utilizados para criar o filme</param>
         /// <returns>O CreatedAtAction do filme criado</returns>
@@ -100,25 +101,64 @@ namespace SoFilmes.WebApi.Controllers
             return CreatedAtAction(nameof(Get), new { command.Id }, movieDto);
         }
 
-        // Atualizar os dados do filme
+        /// <summary>
+        /// Atualza os dados do filme
+        /// </summary>
+        /// <param name="id">Identificador do filme</param>
+        /// <param name="dto">Dados utilizados para atualizar o filme</param>
+        /// <returns>Sem conteúdo</returns>
+        /// <response code="204">Os dados do filme foram atualizados com sucesso.</response>
+        /// <response code="400">Erro na requisição. Os dados estão inválidos.</response>
+        /// <response code="404">O filme a ser atualizado não foi encontrado.</response>
         [HttpPut("{id:guid}")]
-        public ActionResult Put([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] UpdateMovieDto dto)
         {
-            return Ok(id);
+            var command = dto.MapToUpdateMovieCommand(id);
+            await _mediator.Send(command);
+
+            return NoContent();
         }
 
-        // Atualizar o rating do filme
+        /// <summary>
+        /// Atualza a avaliação do filme
+        /// </summary>
+        /// <param name="id">Identificador do filme</param>
+        /// <param name="dto">Dados utilizados para atualizar a avaliação do filme</param>
+        /// <returns>Sem conteúdo</returns>
+        /// <response code="204">A avaliação do filme foi atualiza com sucesso.</response>
+        /// <response code="400">Erro na requisição. Os dados estão inválidos.</response>
+        /// <response code="404">O filme a ser atualizado não foi encontrado.</response>
         [HttpPatch("{id:guid}")]
-        public ActionResult Pacth([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Patch([FromRoute] Guid id, [FromBody] PatchMovieDto dto)
         {
-            return Ok(id);
+            var command = dto.MapToPatchMovieCommand(id);
+            await _mediator.Send(command);
+
+            return NoContent();
         }
 
-        // Excluir o filme
+        /// <summary>
+        /// Remove um filme
+        /// </summary>
+        /// <param name="id">Identificador do filme</param>
+        /// <returns>Sem conteúdo</returns>
+        /// <response code="200">O filme foi deletado com sucesso.</response>
+        /// <response code="404">O filme a ser deletado não foi encontrado.</response>
         [HttpDelete("{id:guid}")]
-        public ActionResult Delete([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            return Ok(id);
+            var command = new DeleteMovieCommand(id);
+            await _mediator.Send(command);
+
+            return Ok();
         }
     }
 }

@@ -35,7 +35,6 @@ namespace SoFilmes.Domain.Entities
         public void UpdateRating(decimal rating)
         {
             Rating = rating;
-
             UpdatedAt = DateTime.Now;
         }
     }

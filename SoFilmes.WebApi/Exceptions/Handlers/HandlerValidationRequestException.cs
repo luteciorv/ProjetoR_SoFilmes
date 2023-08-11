@@ -18,8 +18,8 @@ namespace SoFilmes.WebApi.Exceptions.Handlers
 
             var details = new ProblemDetails
             {
-                Status = StatusCodes.Status400BadRequest,
                 Title = exception.Message,
+                Status = StatusCodes.Status400BadRequest,
                 Type = "https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/400",
             };
 

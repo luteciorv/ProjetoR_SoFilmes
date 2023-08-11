@@ -27,7 +27,7 @@ namespace SoFilmes.WebApi.Controllers
         /// <response code="200">Filmes recuperados com sucesso</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyCollection<ReadMovieDto>>> Get(
+        public async Task<ActionResult<IReadOnlyCollection<ReadMovieDto?>>> Get(
             [FromQuery] int skip = 0, 
             [FromQuery] int take = 25)
         {
@@ -37,11 +37,22 @@ namespace SoFilmes.WebApi.Controllers
             return Ok(movies);
         }
 
-        // Recuperar o filme de id informado
+        /// <summary>
+        /// Recupera o filme com o "id" informado
+        /// </summary>
+        /// <param name="id">Identificador do filme.</param>
+        /// <returns>Um ReadMovieDto do filme recuperado</returns>
+        /// <response code="200">Filme recuperado com sucesso</response>
+        /// <response code="404">Filme não encontrado</response>
         [HttpGet("{id:guid}")]
-        public ActionResult Get([FromRoute] Guid id) 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ReadMovieDto>> Get([FromRoute] Guid id) 
         {
-            return Ok(id);
+            var query = new GetMovieByIdQuery(id);
+            var movie = await _mediator.Send(query);
+
+            return Ok(movie);
         }
 
         // Recuperar o filme pelo título informado

@@ -15,7 +15,8 @@ namespace SoFilmes.WebApi.Exceptions
 
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
-                { typeof(ValidationRequestException), HandlerValidationRequestException.Validation }
+                { typeof(ValidationRequestException), HandlerValidationRequestException.Validation },
+                { typeof(EntityNotFoundException), HandlerEntityException.NotFound }
             };
         }
 

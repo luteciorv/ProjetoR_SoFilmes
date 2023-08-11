@@ -15,10 +15,10 @@ namespace SoFilmes.Application.Movies.Queries.Handlers
             _uow = uow;
         }
 
-        public async Task<ReadMovieDto> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ReadMovieDto> Handle(GetMovieByIdQuery query, CancellationToken cancellationToken)
         {
-            var movie = await _uow.Movies.GetByIdAsync(request.Id) ?? 
-                        throw new EntityNotFoundException($"O filme de id {request.Id} não foi encontrado.");
+            var movie = await _uow.Movies.GetByIdAsync(query.Id) ?? 
+                        throw new EntityNotFoundException($"O filme de id {query.Id} não foi encontrado.");
 
             return movie.MapToReadMovieDto();
         }

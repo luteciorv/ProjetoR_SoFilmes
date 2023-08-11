@@ -9,9 +9,11 @@ namespace SoFilmes.Infrastructure.Persistence.Repositories
     {
         public MovieRepository(DataContext dataContext) : base(dataContext) { }
 
-        public async Task<IReadOnlyCollection<Movie>> GetByTitle(string title) =>
+        public async Task<IReadOnlyCollection<Movie>> GetByTitleAsync(string title, int skip, int take) =>
             await GetAll()
                 .Where(m => m.Title.ToLower().Contains(title.ToLower()))
+                .Skip(skip)
+                .Take(take)
                 .AsNoTracking()
                 .ToListAsync();
     }

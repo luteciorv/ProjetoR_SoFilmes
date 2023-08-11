@@ -4,6 +4,6 @@ namespace SoFilmes.Application.Interfaces.Repositories
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-        Task<IReadOnlyCollection<Movie>> GetByTitle(string title); 
+        Task<IReadOnlyCollection<Movie>> GetByTitleAsync(string title, int skip, int take); 
     }
 }

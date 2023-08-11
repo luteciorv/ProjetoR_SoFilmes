@@ -10,4 +10,14 @@
     <ProjectReference Include="..\SoFilmes.Domain\SoFilmes.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Movies\Commands\" />
+    <Folder Include="Movies\Commands\Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
 </Project>

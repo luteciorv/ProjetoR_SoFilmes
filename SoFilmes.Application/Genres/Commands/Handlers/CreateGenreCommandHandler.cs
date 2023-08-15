@@ -26,6 +26,8 @@ namespace SoFilmes.Application.Genres.Commands.Handlers
 
             await _uow.Genres.AddAsync(genre);
             await _uow.CommitAsync();
+
+            command.SetId(genre.Id);
         }
     }
 }

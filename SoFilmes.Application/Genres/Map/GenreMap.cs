@@ -11,5 +11,11 @@ namespace SoFilmes.Application.Genres.Map
 
         public static Genre MapToEntity(this CreateGenreCommand command) =>
             new(command.Name);
+
+        public static CreateGenreCommand MapToCreateGenreCommand(this CreateGenreDto dto) =>
+            new(dto.Name);
+
+        public static UpdateGenreCommand MapToUpdateGenreCommand(this UpdateGenreDto dto, Guid id) =>
+            new(id, dto.Name);
     }
 }

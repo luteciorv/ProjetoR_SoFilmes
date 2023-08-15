@@ -11,8 +11,8 @@ namespace SoFilmes.Infrastructure.Persistence.Repositories
         public Repository(DataContext dataContext) =>
             _dataContext = dataContext;
 
-        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync() =>
-            await _dataContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync(int skip = 0, int take = 25) =>
+            await _dataContext.Set<TEntity>().Skip(skip).Take(take).AsNoTracking().ToListAsync();
 
         public IQueryable<TEntity> GetAll() =>
             _dataContext.Set<TEntity>().AsNoTracking();

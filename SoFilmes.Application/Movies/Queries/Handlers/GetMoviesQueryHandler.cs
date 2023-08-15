@@ -18,15 +18,15 @@ namespace SoFilmes.Application.Movies.Queries.Handlers
             _validator = validator;
         }
 
-        public Task<IReadOnlyCollection<ReadMovieDto?>> Handle(GetMoviesQuery query, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ReadMovieDto?>> Handle(GetMoviesQuery query, CancellationToken cancellationToken)
         {
             var result = _validator.Validate(query);
             if (!result.IsValid) throw new ValidationRequestException("Não foi possível recuperar os filmes cadastrados.", result.Errors);
 
-            var movies = _uow.Movies.GetAll().Skip(query.Skip).Take(query.Take);
+            var movies = await _uow.Movies.GetAllAsync(query.Skip, query.Take);
             var moviesDto = movies.Select(m => m.MapToReadMovieDto()).ToList();
             
-            return Task.FromResult<IReadOnlyCollection<ReadMovieDto?>>(moviesDto);
+            return moviesDto;
         }
     }
 }

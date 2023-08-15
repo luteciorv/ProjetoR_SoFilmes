@@ -102,7 +102,7 @@ namespace SoFilmes.WebApi.Controllers
         }
 
         /// <summary>
-        /// Atualza os dados do filme
+        /// Atualiza os dados do filme
         /// </summary>
         /// <param name="id">Identificador do filme</param>
         /// <param name="dto">Dados utilizados para atualizar o filme</param>
@@ -123,7 +123,7 @@ namespace SoFilmes.WebApi.Controllers
         }
 
         /// <summary>
-        /// Atualza a avaliação do filme
+        /// Atualiza a avaliação do filme
         /// </summary>
         /// <param name="id">Identificador do filme</param>
         /// <param name="dto">Dados utilizados para atualizar a avaliação do filme</param>

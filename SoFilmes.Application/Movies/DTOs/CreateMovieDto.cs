@@ -6,6 +6,7 @@ namespace SoFilmes.Application.Movies.DTOs
         string Title, 
         string Summary, 
         int DurationInMinutes, 
-        EAgeClassification AgeClassification
+        EAgeClassification AgeClassification,
+        List<Guid> GenresId
     );
 }

@@ -7,10 +7,19 @@ namespace SoFilmes.Application.Movies.Map
     public static class MovieMap
     {
         public static ReadMovieDto MapToReadMovieDto(this Movie entity) =>
-            new(entity.Id, entity.Title, entity.Summary, entity.DurationInMinutes, entity.Rating, entity.AgeClassification.MapToString(), entity.CreatedAt.ToShortDateString(), entity.UpdatedAt.ToShortDateString());
+            new(entity.Id, 
+                entity.Title, 
+                entity.Summary, 
+                entity.DurationInMinutes, 
+                entity.Rating, 
+                entity.AgeClassification.MapToString(), 
+                entity.MoviesGenres.Select(mg => mg.Genre.Name).ToList(), 
+                entity.CreatedAt.ToShortDateString(), 
+                entity.UpdatedAt.ToShortDateString()
+                );
 
         public static CreateMovieCommand MapToCreateMovieCommand(this CreateMovieDto dto) =>
-            new(dto.Title, dto.Summary, dto.DurationInMinutes, dto.AgeClassification);
+            new(dto.Title, dto.Summary, dto.DurationInMinutes, dto.AgeClassification, dto.GenresId);
 
         public static UpdateMovieCommand MapToUpdateMovieCommand(this UpdateMovieDto dto, Guid id) =>
             new(id, dto.Title, dto.Summary, dto.DurationInMinutes, dto.AgeClassification);

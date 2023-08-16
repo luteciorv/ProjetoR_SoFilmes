@@ -1,6 +1,4 @@
-﻿using SoFilmes.Domain.Enums;
-
-namespace SoFilmes.Application.Movies.DTOs
+﻿namespace SoFilmes.Application.Movies.DTOs
 {
     public record ReadMovieDto(
         Guid Id, 
@@ -9,6 +7,7 @@ namespace SoFilmes.Application.Movies.DTOs
         int DurationInMinutes, 
         decimal Rating,
         string AgeClassification, 
+        List<string> Genres,
         string CreatedAt, 
         string UpdatedAt
     );

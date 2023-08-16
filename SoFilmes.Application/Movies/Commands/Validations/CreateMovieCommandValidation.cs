@@ -6,7 +6,7 @@ namespace SoFilmes.Application.Movies.Commands.Validations
 {
     public class CreateMovieCommandValidation : AbstractValidator<CreateMovieCommand>
     {
-        public CreateMovieCommandValidation()
+        public CreateMovieCommandValidation(IUnitOfWork uow)
         {
             RuleFor(m => m.Title)
                 .NotEmpty()
@@ -32,6 +32,12 @@ namespace SoFilmes.Application.Movies.Commands.Validations
             RuleFor(m => m.AgeClassification)
                 .Must(ageClass => Enum.IsDefined(typeof(EAgeClassification), ageClass))
                 .WithMessage(m => $"O campo '{nameof(m.AgeClassification)}' não está correto. O valor informado não existe.");
+
+            RuleFor(m => m.GenresId).Must(genresId =>
+            {
+                var genres = uow.Genres.GetAll().Select(g => g.Id);
+                return genresId.All(id => genres.Contains(id));
+            }).WithMessage(m => $"O campo '{nameof(m.GenresId)}' não está correto. Alguns gêneros não foram cadastrados.");
         }
     }
 }
